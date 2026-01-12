@@ -67,8 +67,8 @@ async def process_ticker(message: Message, state: FSMContext):
     
     next_text = (
         f"Выбран тикер: <b>{ticker}</b>\n\n"
-        "Теперь введите сумму для условной инвестиции в долларах:\n"
-        f"(минимум ${config.MIN_INVESTMENT:,}, максимум ${config.MAX_INVESTMENT:,})"
+        "Введите сумму для условной инвестиции в долларах:\n"
+        f"{config.INVESTMENT_THRESHOLD}"
     )
     await message.answer(next_text, parse_mode="HTML")
     await state.set_state(StockAnalysis.waiting_for_amount)
@@ -179,11 +179,10 @@ async def process_amount(message: Message, state: FSMContext):
                 report += f"   • {model_name}: ❌ Ошибка обучения\n"
             else:
                 best_mark = " ⭐" if model_name == results['best_model'] else ""
-                report += f"   • {model_name}: RMSE = {rmse:.2f}{best_mark}\n"
+                report += f"   • {model_name}: {rmse:.2f}{best_mark}\n"
         
         report += (
-            f"\n💎 <b>Лучшая модель:</b> {results['best_model']}\n"
-            f"🎯 <b>Точность (RMSE):</b> {results['best_rmse']:.2f}\n\n"
+            f"\n🎯 <b>Лучшая модель:</b> {results['best_model']}\n\n"
             f"{'='*40}\n"
             f"💵 <b>АНАЛИЗ ЦЕН:</b>\n"
             f"   • Текущая цена: <b>${current_price:.2f}</b>\n"
@@ -193,7 +192,7 @@ async def process_amount(message: Message, state: FSMContext):
             f"   • Ожидаемый ROI: <b>{roi:+.2f}%</b>\n\n"
         )
         
-        report += f"\n{'='*40}\n📍 <b>ТОРГОВЫЕ РЕКОМЕНДАЦИИ:</b>\n\n"
+        report += f"{'='*40}\n📍 <b>ТОРГОВЫЕ РЕКОМЕНДАЦИИ:</b>\n\n"
         
         if strategy_text:
             report += strategy_text

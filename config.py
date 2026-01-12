@@ -20,8 +20,8 @@ class Config:
     LSTM_EPOCHS = 30
     LSTM_BATCH_SIZE = 32
     LSTM_LOOK_BACK = 60  # Количество лагов
-    LSTM_HIDDEN_SIZE = 32
-    LSTM_NUM_LAYERS = 2
+    LSTM_HIDDEN_SIZE = 64
+    LSTM_NUM_LAYERS = 3
     
     # Random Forest
     RF_N_ESTIMATORS = 100
@@ -44,8 +44,9 @@ class Config:
     PLOT_DPI = 100 # Качество изображения
     
     # Ограничения
-    MAX_INVESTMENT = 1_000_000_000.0  # 1 миллиард долларов
     MIN_INVESTMENT = 1.0  # Минимальная сумма
+    MAX_INVESTMENT = 1_000_000_000.0  # 1 миллиард долларов
+    INVESTMENT_THRESHOLD = 'от 1 до 1 млрд ($$$)'
     MIN_PROFIT_THRESHOLD = 1.0  # Минимальный размер прибыли для формирования стратегии
 
 # Экземпляр конфигурации
